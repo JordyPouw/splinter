@@ -1,0 +1,22 @@
+# Logs and databases. #
+######################
+*.log
+*.sql
+*.sqlite
+*.ftppass
+*.sass-cache
+ 
+# OS generated files. #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Build tools. #
+######################
+node_modules
+bower_components

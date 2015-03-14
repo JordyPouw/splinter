@@ -1,0 +1,139 @@
+/**
+ *	File:				splinter.scss
+ *	Version:		1.0.0
+ *	Date:				March 14, 2015
+ *	Link:				https://github.com/JordyPouw/splinter
+ *	Author:			Jordy Pouw
+ */
+
+
+// $ Settings.
+// ==================================================
+$grid-columns:					12				!default;
+$grid-row-width:				1200px		!default;
+$grid-gutter-width:			15px 			!default;
+
+$grid-query-width-sm:		35.563em 	!default; // 569px
+$grid-query-width-md:		48.063em 	!default; // 769px
+$grid-query-width-lg:		64.063em 	!default; // 1025px
+
+$grid-prefix:						g- 				!default;
+$grid-row:							row12			!default;
+$grid-col:							col 			!default;
+$grid-push:							push 			!default;
+$grid-pull:							pull 			!default;
+$grid-offset:						offset 		!default;
+$grid-media-query-xs: 	--xs 			!default;
+$grid-media-query-sm: 	--sm 			!default;
+$grid-media-query-md: 	--md 			!default;
+$grid-media-query-lg: 	--lg 			!default;
+
+
+// $ Tools.
+// ==================================================
+@mixin box-sizing($box-sizing) {
+  -webkit-box-sizing: $box-sizing;
+  	 -moz-box-sizing: $box-sizing;
+  				box-sizing: $box-sizing;
+}
+
+@mixin grid-setting($grid-media-query, $grid-method, $prop) {
+	@for $index from 1 through $grid-columns {
+		.#{$grid-prefix}#{$grid-method}#{$index}#{$grid-media-query} {
+		  #{$prop}: percentage(($index/$grid-columns));
+		}
+	}
+}
+
+@mixin make-grid($grid-media-query){
+	@include grid-setting($grid-media-query, $grid-col, width);
+	@include grid-setting($grid-media-query, $grid-push, left);
+	@include grid-setting($grid-media-query, $grid-pull, right);
+	@include grid-setting($grid-media-query, $grid-offset, margin-left);
+}
+
+
+/** 
+ $ Box Sizing Model.
+ ==================================================
+ */
+*, 
+*:before, 
+*:after {	
+	@include box-sizing(border-box);
+}
+
+
+/** 
+ $ ClearFix Method.
+ ==================================================
+ */
+.#{$grid-prefix}#{$grid-row}:after {
+  content: " ";
+  display: table;
+  clear: both;
+
+  .#{$grid-prefix}#{$grid-row} & {
+		content: " ";
+		display: table;
+		clear: both;  	
+  }
+}
+
+
+/** 
+ $ Grid Fundamentals.
+ ==================================================
+ */
+.#{$grid-prefix}#{$grid-row} {
+	width: 100%;
+	max-width: $grid-row-width;
+	margin: 0 auto;
+	& .#{$grid-prefix}#{$grid-row} {
+		width: auto;
+		max-width: none;
+		margin: 0 -$grid-gutter-width;
+	}
+}
+
+[class^="#{$grid-prefix}#{$grid-col}"], 
+[class*=" #{$grid-prefix}#{$grid-col}"] {
+	float: left;
+	position: relative;
+	min-height: 1px;
+	padding: 0 $grid-gutter-width;
+}
+
+
+/** 
+ $ Mobile First: Extra small.
+ ==================================================
+ */
+@include make-grid($grid-media-query-xs);
+
+
+/** 
+ $ Media Query: Small.
+ ==================================================
+ */   
+@media only screen and (min-width: $grid-query-width-sm) {
+	@include make-grid($grid-media-query-sm);
+}
+
+
+/** 
+ $ Media Query: Medium.
+ ==================================================
+ */
+@media only screen and (min-width: $grid-query-width-md) {
+	@include make-grid($grid-media-query-md);
+}		
+
+
+/** 
+ $ Media Query: Large.
+ ==================================================
+ */
+@media only screen and (min-width: $grid-query-width-lg) {
+	@include make-grid($grid-media-query-lg);
+}
