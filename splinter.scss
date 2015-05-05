@@ -1,7 +1,7 @@
 /**
  *	File:				splinter.scss
- *	Version:		1.0.0
- *	Date:				March 14, 2015
+ *	Version:		1.1.0
+ *	Date:				May 5, 2015
  *	Link:				https://github.com/JordyPouw/splinter
  *	Author:			Jordy Pouw
  */
@@ -12,10 +12,13 @@
 $grid-columns:					12				!default;
 $grid-row-width:				1200px		!default;
 $grid-gutter-width:			15px 			!default;
+$grid-query-width-sm:		568px 		!default;
+$grid-query-width-md:		768px 		!default;
+$grid-query-width-lg:		1024px 		!default;
 
-$grid-query-width-sm:		35.563em 	!default; // 569px
-$grid-query-width-md:		48.063em 	!default; // 769px
-$grid-query-width-lg:		64.063em 	!default; // 1025px
+$grid-create-push: 			true 			!default;
+$grid-create-pull: 			true 			!default;
+$grid-create-offset: 		true 			!default;
 
 $grid-prefix:						g- 				!default;
 $grid-row:							row12			!default;
@@ -23,22 +26,69 @@ $grid-col:							col 			!default;
 $grid-push:							push 			!default;
 $grid-pull:							pull 			!default;
 $grid-offset:						offset 		!default;
-$grid-media-query-xs: 	--xs 			!default;
-$grid-media-query-sm: 	--sm 			!default;
-$grid-media-query-md: 	--md 			!default;
-$grid-media-query-lg: 	--lg 			!default;
+$grid-suffix-xs: 				--xs 			!default;
+$grid-suffix-sm: 				--sm 			!default;
+$grid-suffix-md: 				--md 			!default;
+$grid-suffix-lg: 				--lg 			!default;
 
 
 // $ Tools.
 // ==================================================
-@mixin box-sizing($box-sizing) {
-  -webkit-box-sizing: $box-sizing;
-  	 -moz-box-sizing: $box-sizing;
-  				box-sizing: $box-sizing;
+@function em($target, $context: 16px) {
+	@return ($target / $context) * 1em;
+}
+
+@mixin grid-mq($width) {
+	@if $width == min-sm {
+		@media only screen and (min-width: em($grid-query-width-sm + 1)) {@content;}
+	}
+
+	@else if $width == max-sm {
+		@media only screen and (max-width: em($grid-query-width-sm)) {@content;}
+	}
+
+	@else if $width == min-md {
+		@media only screen and (min-width: em($grid-query-width-md + 1)) {@content;}
+	}
+
+	@else if $width == max-md {
+		@media only screen and (max-width: em($grid-query-width-md)) {@content;}
+	}
+
+	@else if $width == min-lg {
+		@media only screen and (min-width: em($grid-query-width-lg + 1)) {@content;}
+	}
+
+	@else if $width == max-lg {
+		@media only screen and (max-width: em($grid-query-width-lg)) {@content;}
+	}
+}
+
+@mixin custom-mq($min-max, $width) {
+	@if $min-max == min {
+		@media only screen and (min-width: em($width + 1)) {@content;}
+	}
+
+	@else if $min-max == max {
+		@media only screen and (max-width: em($width)) {@content;}
+	}
 }
 
 @mixin grid-setting($grid-media-query, $grid-method, $prop) {
-	@for $index from 1 through $grid-columns {
+	@for $index from 1 through $grid-columns {		
+		// If push or pull, add 0.
+		@if ($grid-method == $grid-push) and ($index == 1) or ($grid-method == $grid-pull) and ($index == 1){
+			.#{$grid-prefix}#{$grid-method}0#{$grid-media-query} {
+			  #{$prop}: auto;
+			}
+		}
+		// If offset, add 0.
+		@if ($grid-method == $grid-offset) and ($index == 1){
+			.#{$grid-prefix}#{$grid-method}0#{$grid-media-query} {
+			  #{$prop}: 0;
+			}
+		}		
+		// Normal loop from 1 through amount of columns.
 		.#{$grid-prefix}#{$grid-method}#{$index}#{$grid-media-query} {
 		  #{$prop}: percentage(($index/$grid-columns));
 		}
@@ -47,9 +97,18 @@ $grid-media-query-lg: 	--lg 			!default;
 
 @mixin make-grid($grid-media-query){
 	@include grid-setting($grid-media-query, $grid-col, width);
-	@include grid-setting($grid-media-query, $grid-push, left);
-	@include grid-setting($grid-media-query, $grid-pull, right);
-	@include grid-setting($grid-media-query, $grid-offset, margin-left);
+	
+	@if($grid-create-push == true){
+		@include grid-setting($grid-media-query, $grid-push, left);
+	}
+	
+	@if($grid-create-pull == true){
+		@include grid-setting($grid-media-query, $grid-pull, right);
+	}
+	
+	@if($grid-create-offset == true){
+		@include grid-setting($grid-media-query, $grid-offset, margin-left);
+	}
 }
 
 
@@ -60,7 +119,7 @@ $grid-media-query-lg: 	--lg 			!default;
 *, 
 *:before, 
 *:after {	
-	@include box-sizing(border-box);
+	box-sizing: border-box;
 }
 
 
@@ -109,15 +168,15 @@ $grid-media-query-lg: 	--lg 			!default;
  $ Mobile First: Extra small.
  ==================================================
  */
-@include make-grid($grid-media-query-xs);
+@include make-grid($grid-suffix-xs);
 
 
 /** 
  $ Media Query: Small.
  ==================================================
- */   
-@media only screen and (min-width: $grid-query-width-sm) {
-	@include make-grid($grid-media-query-sm);
+ */
+@include grid-mq(min-sm) {
+	@include make-grid($grid-suffix-sm);
 }
 
 
@@ -125,15 +184,15 @@ $grid-media-query-lg: 	--lg 			!default;
  $ Media Query: Medium.
  ==================================================
  */
-@media only screen and (min-width: $grid-query-width-md) {
-	@include make-grid($grid-media-query-md);
-}		
+@include grid-mq(min-md) {
+	@include make-grid($grid-suffix-md);
+}
 
 
 /** 
  $ Media Query: Large.
  ==================================================
  */
-@media only screen and (min-width: $grid-query-width-lg) {
-	@include make-grid($grid-media-query-lg);
+@include grid-mq(min-lg) {
+	@include make-grid($grid-suffix-lg);
 }
