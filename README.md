@@ -31,7 +31,7 @@ With Splinter it's possible to customize a lot of things before you start using 
 - Filter out the push, pull or offset methods.
 - Change the naming of every part of the class names. 
 
-*Note: If you don't want to use a prefix in your class names, just change the variable to an empty string: "".*
+*Note: If you don't want to use a prefix in your class names, you can just change the variable to an empty string: "".*
 
 ```scss
 // $ Settings.
