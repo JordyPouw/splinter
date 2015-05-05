@@ -1,6 +1,6 @@
 /**
  *	File:				splinter.scss
- *	Version:		1.1.0
+ *	Version:		1.1.1
  *	Date:				May 5, 2015
  *	Link:				https://github.com/JordyPouw/splinter
  *	Author:			Jordy Pouw
@@ -11,7 +11,7 @@
 // ==================================================
 $grid-columns:					12				!default;
 $grid-row-width:				1200px		!default;
-$grid-gutter-width:			15px 			!default;
+$grid-gutter-width:			30px 			!default;
 $grid-query-width-sm:		568px 		!default;
 $grid-query-width-md:		768px 		!default;
 $grid-query-width-lg:		1024px 		!default;
@@ -151,7 +151,7 @@ $grid-suffix-lg: 				--lg 			!default;
 	& .#{$grid-prefix}#{$grid-row} {
 		width: auto;
 		max-width: none;
-		margin: 0 -$grid-gutter-width;
+		margin: 0 -($grid-gutter-width / 2);
 	}
 }
 
@@ -160,7 +160,7 @@ $grid-suffix-lg: 				--lg 			!default;
 	float: left;
 	position: relative;
 	min-height: 1px;
-	padding: 0 $grid-gutter-width;
+	padding: 0 ($grid-gutter-width / 2);
 }
 
 
