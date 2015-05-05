@@ -38,7 +38,7 @@ With Splinter it's possible to customize a lot of things before you start using 
 // ==================================================
 $grid-columns:				12			!default;
 $grid-row-width:			1200px		!default;
-$grid-gutter-width:			15px 		!default;
+$grid-gutter-width:			30px 		!default;
 $grid-query-width-sm:		568px 		!default;
 $grid-query-width-md:		768px 		!default;
 $grid-query-width-lg:		1024px 		!default;
