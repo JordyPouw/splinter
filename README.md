@@ -13,11 +13,11 @@ Splinter is a highly customizable responsive grid system written in scss. Simply
 ```html
 <div class="g-row12">
   <div class="g-col12--xs g-col6--md">
-  	Content
+    Content
   </div>
 
   <div class="g-col12--xs g-col6--md">
-  	Content
+    Content
   </div>
 </div> 
 ```
@@ -36,27 +36,27 @@ With Splinter it's possible to customize a lot of things before you start using 
 ```scss
 // $ Settings.
 // ==================================================
-$grid-columns:				12			!default;
-$grid-row-width:			1200px		!default;
-$grid-gutter-width:			30px 		!default;
-$grid-query-width-sm:		568px 		!default;
-$grid-query-width-md:		768px 		!default;
-$grid-query-width-lg:		1024px 		!default;
+$grid-columns:          12        !default;
+$grid-row-width:        1200px    !default;
+$grid-gutter-width:     30px      !default;
+$grid-query-width-sm:   568px     !default;
+$grid-query-width-md:   768px     !default;
+$grid-query-width-lg:   1024px    !default;
 
-$grid-create-push: 			true 		!default;
-$grid-create-pull: 			true 		!default;
-$grid-create-offset: 		true 		!default;
+$grid-create-push:      true      !default;
+$grid-create-pull:      true      !default;
+$grid-create-offset:    true      !default;
 
-$grid-prefix:				g- 			!default;
-$grid-row:					row12		!default;
-$grid-col:					col 		!default;
-$grid-push:					push 		!default;
-$grid-pull:					pull 		!default;
-$grid-offset:				offset 		!default;
-$grid-suffix-xs: 			--xs 		!default;
-$grid-suffix-sm: 			--sm 		!default;
-$grid-suffix-md: 			--md 		!default;
-$grid-suffix-lg: 			--lg 		!default;
+$grid-prefix:           g-        !default;
+$grid-row:              row12     !default;
+$grid-col:              col       !default;
+$grid-push:             push      !default;
+$grid-pull:             pull      !default;
+$grid-offset:           offset    !default;
+$grid-suffix-xs:        --xs      !default;
+$grid-suffix-sm:        --sm      !default;
+$grid-suffix-md:        --md      !default;
+$grid-suffix-lg:        --lg      !default;
 ```
 
 ## Support
