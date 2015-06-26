@@ -1,7 +1,7 @@
 /**
  *  File:       splinter.scss
- *  Version:    1.1.1
- *  Date:       May 5, 2015
+ *  Version:    1.1.2
+ *  Date:       June 26, 2015
  *  Link:       https://github.com/JordyPouw/splinter
  *  Author:     Jordy Pouw
  */
@@ -151,7 +151,7 @@ $grid-suffix-lg:        --lg      !default;
   & .#{$grid-prefix}#{$grid-row} {
     width: auto;
     max-width: none;
-    margin: 0 -($grid-gutter-width / 2);
+    margin: 0 (-($grid-gutter-width / 2));
   }
 }
 
